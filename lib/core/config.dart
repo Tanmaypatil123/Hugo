@@ -19,7 +19,7 @@ abstract final class HugoConfig {
   /// Where users can see the source and report problems.
   static const repoUrl = String.fromEnvironment(
     'HUGO_REPO_URL',
-    defaultValue: 'https://github.com/',
+    defaultValue: 'https://github.com/Tanmaypatil123/Hugo',
   );
   static const privacyPolicyUrl = String.fromEnvironment(
     'HUGO_PRIVACY_URL',

@@ -44,7 +44,7 @@ flutter run --dart-define=HF_OAUTH_CLIENT_ID=your-client-id
 
 Without a client ID the OAuth button explains that it's unavailable, and token sign-in still works.
 
-Other build-time settings: `HUGO_REPO_URL` (the source-code link, also used for reporting chat replies) and `HUGO_PRIVACY_URL`.
+Other build-time settings: `HUGO_REPO_URL` (the source-code link, also used for reporting chat replies; defaults to <https://github.com/Tanmaypatil123/Hugo>, so forks should set their own) and `HUGO_PRIVACY_URL`.
 
 ### Checking the signed-in APIs
 
