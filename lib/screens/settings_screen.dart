@@ -55,6 +55,16 @@ class SettingsScreen extends StatelessWidget {
                   onTap: () => _showLinksHelp(context),
                 ),
                 const Divider(),
+                SwitchListTile(
+                  title: const Text('Share chats with AI providers'),
+                  subtitle: const Text(
+                    'Chat sends your messages to Hugging Face and the model\'s inference provider. Turn off to be asked again.',
+                    style: TextStyle(color: HugoColors.textMuted, fontSize: 12),
+                  ),
+                  value: settings.chatConsent,
+                  onChanged: settings.setChatConsent,
+                ),
+                const Divider(),
                 ListTile(
                   title: const Text('Clear image cache'),
                   onTap: () {

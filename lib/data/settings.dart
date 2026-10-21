@@ -11,21 +11,28 @@ class SettingsController extends ChangeNotifier {
   static const _kHideMature = 'hide_mature';
   static const _kHideUncensored = 'hide_uncensored';
   static const _kSavedPapers = 'saved_papers';
+  static const _kChatConsent = 'chat_ai_consent';
 
   SharedPreferences? _prefs;
   bool _hideMature = true;
   bool _hideUncensored = true;
   List<Map<String, dynamic>> _saved = [];
+  bool _chatConsent = false;
 
   bool get hideMature => _hideMature;
   bool get hideUncensored => _hideUncensored;
   List<Map<String, dynamic>> get savedPapers => List.unmodifiable(_saved);
+
+  /// Whether the user agreed to send chat messages to Hugging Face and the
+  /// model's inference provider. Chat asks before the first message.
+  bool get chatConsent => _chatConsent;
 
   Future<void> load() async {
     try {
       _prefs = await SharedPreferences.getInstance();
       _hideMature = _prefs!.getBool(_kHideMature) ?? true;
       _hideUncensored = _prefs!.getBool(_kHideUncensored) ?? true;
+      _chatConsent = _prefs!.getBool(_kChatConsent) ?? false;
       final raw = _prefs!.getString(_kSavedPapers);
       if (raw != null) {
         _saved = (jsonDecode(raw) as List)
@@ -49,6 +56,12 @@ class SettingsController extends ChangeNotifier {
     _hideUncensored = v;
     notifyListeners();
     await _prefs?.setBool(_kHideUncensored, v);
+  }
+
+  Future<void> setChatConsent(bool v) async {
+    _chatConsent = v;
+    notifyListeners();
+    await _prefs?.setBool(_kChatConsent, v);
   }
 
   bool isSaved(String paperId) => _saved.any((p) => p['id'] == paperId);

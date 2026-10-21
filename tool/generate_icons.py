@@ -9,6 +9,8 @@ Needs Pillow (pip install pillow). Writes:
   - Android legacy icons: android/app/src/main/res/mipmap-*/ic_launcher.png
   - iOS app icons:        ios/Runner/Assets.xcassets/AppIcon.appiconset/*.png
   - Store icons:          assets/logo/hugo_icon_1024.png, play_store_512.png
+  - Launch screen logo:   android/.../drawable-*/launch_logo.png and
+                          ios/.../LaunchImage.imageset/*.png (96dp / 96pt)
 
 The Android adaptive icon (Android 8+) is a vector drawable and is not
 generated here: see res/drawable/ic_launcher_foreground.xml.
@@ -106,6 +108,21 @@ def ios():
         print(f"ios {name}: {size}px")
 
 
+LAUNCH_LOGO = 96  # dp on Android, pt on iOS
+
+
+def launch():
+    res = ROOT / "android/app/src/main/res"
+    for density, scale in {"mdpi": 1, "hdpi": 1.5, "xhdpi": 2, "xxhdpi": 3, "xxxhdpi": 4}.items():
+        folder = res / f"drawable-{density}"
+        folder.mkdir(exist_ok=True)
+        render(round(LAUNCH_LOGO * scale), rounded=True).save(folder / "launch_logo.png", optimize=True)
+    image_set = ROOT / "ios/Runner/Assets.xcassets/LaunchImage.imageset"
+    for scale, suffix in [(1, ""), (2, "@2x"), (3, "@3x")]:
+        render(LAUNCH_LOGO * scale, rounded=True).save(image_set / f"LaunchImage{suffix}.png", optimize=True)
+    print(f"launch logo: {LAUNCH_LOGO}dp/pt")
+
+
 def store():
     logo = ROOT / "assets/logo"
     save_opaque(render(1024, rounded=False), logo / "hugo_icon_1024.png")
@@ -117,3 +134,4 @@ if __name__ == "__main__":
     android()
     ios()
     store()
+    launch()
