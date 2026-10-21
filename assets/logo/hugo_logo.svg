@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 32 32">
+  <title>Hugo</title>
+  <rect width="32" height="32" rx="8" fill="#F5B83D"/>
+  <g fill="none" stroke="#1A1300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="16,8 23,12 16,16 9,12" fill="#1A1300"/>
+    <path d="M16 8L23 12V20L16 24L9 20V12Z M16 16V24"/>
+    <path d="M5.5 13Q4.5 22.5 12 25.5 M26.5 13Q27.5 22.5 20 25.5"/>
+  </g>
+</svg>
