@@ -46,39 +46,6 @@ Without a client ID the OAuth button explains that it's unavailable, and token s
 
 Other build-time settings: `HUGO_REPO_URL` (the source-code link, also used for reporting chat replies; defaults to <https://github.com/Tanmaypatil123/Hugo>, so forks should set their own) and `HUGO_PRIVACY_URL`.
 
-### Checking the signed-in APIs
-
-```bash
-HF_TOKEN=hf_xxx dart run tool/api_check.dart
-```
-
-This calls whoami, your repos, likes, search, the chat models and a one-word chat reply. It also tries to like and unlike one model, which the Hub currently rejects for access tokens. The token is read from the environment only. Never commit a token.
-
-## Project layout
-
-```
-lib/
-  core/      theme, formatting, build config
-  data/      HubApi (REST client), auth, settings, models
-  screens/   one file per screen
-  widgets/   shared UI (tiles, Markdown, files list, ...)
-  routes.dart  go_router routes that mirror huggingface.co paths
-test/        unit tests and a widget smoke test (fake HTTP client)
-tool/        api_check.dart
-```
-
-## Notes on the Hub API
-
-- `library=` and `language=` query params are **ignored** by `/api/models`. Pass libraries, languages and licenses as repeated `filter=` values (`filter=gguf&filter=hi&filter=license:mit`). The Hub ANDs them together.
-- There's no way to exclude a tag on the server, so content filtering happens in the app (`SettingsController.allows`).
-- `/api/papers/{id}` already includes `linkedModels`, `linkedDatasets` and `linkedSpaces`.
-- `POST /api/{type}s/{id}/like` rejects access tokens, even write tokens, with `401 Invalid username or password`. Reading likes (`/api/users/{name}/likes`) works. When liking fails, the app opens the repo on huggingface.co instead.
-- Chat returns `402` when the account has no Inference Providers credits left. The app shows that message as-is.
-
 ## Contributing
 
 Issues and pull requests are welcome. Please run `flutter analyze` and `flutter test` before opening a PR.
-
-## License
-
-To be decided by the maintainer. Add a `LICENSE` file before the first release.
