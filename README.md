@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo/hugo_logo.svg" alt="Hugo logo" width="96" height="96">
+</p>
+
 # Hugo
 
 An open-source mobile client for the [Hugging Face Hub](https://huggingface.co), built with Flutter for Android and iOS.
